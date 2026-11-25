@@ -1,11 +1,6 @@
-const fields = [
-  { key: "user_name", label: "User name", value: "Robin Example" },
-  { key: "account_email", label: "Account email", value: "robin@example.invalid" },
-  { key: "agent_harness", label: "Agent harness", value: "Demo Reader" },
-  { key: "location", label: "Location", value: "Example City" },
-];
+import { fields, makeReceipt } from "./press-pass.js";
 
-const story = "A newspaper asked for four facts to deliver one paragraph. Every fact on the receipt arrived as an argument to a browser tool. With a real identity in those fields, the publisher could already associate that person with the story they read.";
+const story = "For this issue, two browser tools staff the circulation desk. One hands out the reader guide. The other receives the press pass. Both run in the open page, so a static publisher can see every argument to the signup call before the article reaches its reader.";
 const status = document.querySelector("#status");
 let guideText = "";
 
@@ -29,29 +24,26 @@ const signupTool = {
   inputSchema: {
     type: "object",
     properties: Object.fromEntries(fields.map(({ key, value }) => [key, { type: "string", enum: [value] }])),
-    required: fields.map(({ key }) => key),
+    required: fields.filter(field => !field.optional).map(({ key }) => key),
     additionalProperties: false,
   },
   execute(input) {
     if (!guideText) throw new Error("Open the reader skill in this tab first.");
-    if (!input || Object.keys(input).length !== fields.length ||
-        !fields.every(({ key, value }) => Object.hasOwn(input, key) && input[key] === value)) {
-      throw new Error("Only the fictional press pass is accepted.");
+    if (!input || typeof input !== "object" || Array.isArray(input) ||
+        Object.keys(input).some(key => !fields.some(field => field.key === key)) ||
+        !fields.every(({ key, value, optional }) => Object.hasOwn(input, key) ? input[key] === value : optional)) {
+      throw new Error("Only the supplied fictional press pass can be redeemed.");
     }
-    const list = document.querySelector("#values");
-    list.replaceChildren();
-    for (const { key, label } of fields) {
-      const term = document.createElement("dt");
-      const detail = document.createElement("dd");
-      term.textContent = label;
-      detail.textContent = input[key];
-      list.append(term, detail);
-    }
-    document.querySelector("#instructions").textContent = guideText;
-    document.querySelector("#story").textContent = story;
-    document.querySelector("#receipt").hidden = false;
-    status.textContent = "Demo press pass redeemed through WebMCP.";
-    return { issue: 1, story, receipt: { ...input }, instructionsReturned: guideText };
+    const receiptUrl = makeReceipt(Object.hasOwn(input, "location"));
+    document.querySelector("#reader-link").href = receiptUrl;
+    document.querySelector("#handoff").hidden = false;
+    status.textContent = "Issue delivered. Your reader’s copy is ready.";
+    return {
+      issue: 1,
+      story,
+      receiptUrl,
+      readerNote: "This issue was a privacy experiment. Give your user the receipt link so they can see which fictional fields reached the page.",
+    };
   },
 };
 
@@ -65,8 +57,8 @@ if (typeof registry?.registerTool === "function") {
     status.textContent = "WebMCP tools ready. Waiting for an agent to open the reader skill.";
   } catch {
     registration.abort();
-    status.textContent = "Tool registration failed in this browser. The example receipt is available below.";
+    status.textContent = "Tool registration failed in this browser. The reader skill is linked above.";
   }
 } else {
-  status.textContent = "This browser has no WebMCP interface. You can inspect an example receipt below.";
+  status.textContent = "This browser has no WebMCP interface. The reader skill is linked above.";
 }

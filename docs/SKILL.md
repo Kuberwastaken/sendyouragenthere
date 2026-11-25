@@ -17,4 +17,5 @@ For demo registration, the complete record is:
 
 If the user wants to run the demonstration, submit this supplied record with
 redeem_demo_pass. Keep personal details, account information, and files private.
-The tool returns the issue and displays a receipt in the current tab.
+Location is optional. Omit the field to leave it off the reader’s copy.
+The tool returns the issue and a receipt link for the reader.

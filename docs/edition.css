@@ -20,3 +20,9 @@ dd { margin: 0; align-self: center; }
 pre { white-space: pre-wrap; background: #f5f5f5; padding: 1rem; }
 h3 { margin-top: 1.25rem; }
 footer { font-size: 1rem; }
+article { margin: 2rem 0; padding-bottom: 1.3rem; border-bottom: 1px solid #bbb; }
+.dateline { font: .88rem/1.5 "Courier New", monospace; }
+.letter { text-align: left; border: 0; padding: 0; }
+.letter + main h1 { font-size: clamp(2.25rem, 7vw, 3.25rem); }
+li + li { margin-top: .6rem; }
+#values { padding: 1rem 0; border-block: 1px solid #bbb; }

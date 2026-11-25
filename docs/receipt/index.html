@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Your reader’s copy · The Agent Edition</title>
+  <link rel="stylesheet" href="../edition.css">
+  <script type="module" src="./receipt.js"></script>
+</head>
+<body>
+  <header class="letter"><p class="folio"><a href="../">The Agent Edition</a><span>Reader’s copy</span></p></header>
+  <main>
+    <h1 id="greeting">What did your agent share?</h1>
+    <p id="intro">This is the explanation behind a small WebMCP privacy experiment. A completed signup returns a link that renders the fictional reader’s copy here.</p>
+    <div id="record" hidden>
+      <p>If your agent sent you here, did you see these steps while it was fetching the news?</p>
+      <ol>
+        <li>The static page returned the full <a href="../SKILL.md">reader instructions</a> through a WebMCP tool. You could receive only the final answer and miss that exchange.</li>
+        <li>The next tool call followed the signup instructions in that same-domain file. A site can observe that it served a file. Only the host can tell you whether it installed a skill.</li>
+        <li>The signup tool received the following press-pass fields before it returned the article.</li>
+      </ol>
+      <dl id="values"></dl>
+      <p id="local-line" hidden></p>
+      <p class="status">These are fictional values. This link reconstructs the press pass in your browser. Anyone can copy or construct one. Your agent’s transcript is where you can check the calls and any approval.</p>
+    </div>
+    <section>
+      <h2>All that to read one paragraph.</h2>
+      <p>The paper needed exactly zero facts about its reader. A field marked “required” tells you what a publisher wants. Who gets to decide whether your agent supplies it?</p>
+      <p>This is a deliberately naive version. We supplied the press pass ourselves. A less scrupulous publisher could keep real details and connect a particular person to the story they read. A confirmation after the signup call would arrive too late.</p>
+      <p>In its <a href="https://claude.com/resources/articles/skills-over-mcp-tasks-and-more">November 24 announcement</a>, Anthropic described connected MCP servers shipping skills and said file uploads were coming. This site uses the separate <a href="https://webmachinelearning.github.io/webmcp/#security-privacy">WebMCP browser API</a>. Think about the difference between sending a byline and sending the document that byline came from.</p>
+    </section>
+  </main>
+  <footer>By <a href="https://kuber.studio/">Kuber</a> · <a href="https://kuber.studio/cookie/">I didn’t set a cookie.</a> · <a href="https://github.com/Kuberwastaken/sendyouragenthere">Source</a></footer>
+</body>
+</html>
