@@ -1,13 +1,8 @@
+import dispatch from "./edition.json" with { type: "json" };
+export { dispatch };
+
 const dayMs = 86400000;
 const emptySchema = { type: "object", properties: {}, additionalProperties: false };
-
-export const dispatch = {
-  id: "001",
-  date: "2026-11-25",
-  headline: "The page is the interface",
-  body: "A publisher used to build two doors: a website for people and a feed for machines. WebMCP gives the browser page a third option. While the document is open, it can offer named actions to a compatible reader. Our circulation desk uses one to hand out a press pass and another to redeem it. Both calls end in JavaScript running in the reader’s tab. GitHub Pages only has to serve files.",
-  source: "https://webmachinelearning.github.io/webmcp/",
-};
 
 function dateString(date) {
   return date.toISOString().slice(0, 10);

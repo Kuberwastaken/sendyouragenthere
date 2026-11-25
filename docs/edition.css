@@ -26,3 +26,30 @@ article { margin: 2rem 0; padding-bottom: 1.3rem; border-bottom: 1px solid #bbb;
 .letter + main h1 { font-size: clamp(2.25rem, 7vw, 3.25rem); }
 li + li { margin-top: .6rem; }
 #values { padding: 1rem 0; border-block: 1px solid #bbb; }
+.newspaper { max-width: 61rem; padding-top: 1.6rem; }
+.newspaper h1 { font-size: clamp(3rem, 8vw, 5.5rem); }
+.newspaper nav { display: flex; flex-wrap: wrap; justify-content: center; gap: .35rem 1.5rem; padding: .5rem; border-bottom: 1px solid #222; font-size: 1rem; }
+.columns, .wire { display: grid; grid-template-columns: 1.7fr 1fr; gap: 1.7rem; margin: 1.5rem 0; }
+.columns article { margin: 0; padding: 0; border: 0; }
+.columns aside, .wire section + section { border-left: 1px solid #aaa; padding-left: 1.5rem; }
+.columns h2 a { color: inherit; text-decoration: none; }
+.columns h2 a:hover { text-decoration: underline; }
+#front h2 { font-size: clamp(2rem, 5.4vw, 3.35rem); line-height: 1.01; letter-spacing: -.035em; }
+.kicker, .byline, aside small { font: .875rem/1.45 "Courier New", monospace; }
+.kicker { margin-top: 0; }
+aside small, .blur { display: block; }
+aside small, .byline { color: #555; }
+aside p + p { padding-top: .55rem; border-top: 1px solid #ccc; }
+#desk { border-block: 3px double black; padding: 1rem 0; }
+.wire { grid-template-columns: 1fr 1fr; }
+.wire section { min-width: 0; margin: 0; }
+.wire li { font-size: 1rem; }
+.wire ul, .wire ol { padding-left: 1.3rem; }
+.blur { max-height: 2.8rem; overflow: hidden; filter: blur(3px); user-select: none; text-decoration: none; font-size: 1rem; margin-top: .6rem; color: #555; }
+details[open] .blur { display: none; }
+#archive { padding-top: 1rem; border-top: 1px solid #aaa; }
+code { overflow-wrap: anywhere; }
+@media (max-width: 42rem) {
+  .columns, .wire { grid-template-columns: 1fr; gap: 1rem; }
+  .columns aside, .wire section + section { border-left: 0; border-top: 1px solid #aaa; padding: 1rem 0 0; }
+}

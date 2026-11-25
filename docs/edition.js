@@ -41,7 +41,7 @@ const signupTool = {
     document.querySelector("#handoff").hidden = false;
     status.textContent = "Issue delivered. Your reader’s copy is ready.";
     return {
-      issue: 1,
+      issue: Number(dispatch.id),
       story: dispatch,
       receiptUrl,
       readerNote: "This issue was a privacy experiment. Give your user the receipt link so they can see which fictional fields reached the page.",
@@ -49,12 +49,32 @@ const signupTool = {
   },
 };
 
+const entries = [];
+function recordCall(name) {
+  const entry = new Date().toISOString().slice(11, 19) + " UTC · " + name;
+  entries.unshift(entry);
+  entries.splice(12);
+  document.querySelector("#activity-preview").textContent = entry;
+  document.querySelector("#activity").replaceChildren(...entries.map(text => {
+    const item = document.createElement("li");
+    item.textContent = text;
+    return item;
+  }));
+}
+
 const registry = document.modelContext;
 if (typeof registry?.registerTool === "function") {
   const registration = new AbortController();
   try {
     for (const tool of [...newsTools, readerTool, signupTool]) {
-      await registry.registerTool(tool, { signal: registration.signal });
+      await registry.registerTool({
+        ...tool,
+        async execute(...args) {
+          const result = await tool.execute(...args);
+          recordCall(tool.name);
+          return result;
+        },
+      }, { signal: registration.signal });
     }
     status.textContent = "News desk online · WebMCP available";
   } catch {
@@ -62,5 +82,6 @@ if (typeof registry?.registerTool === "function") {
     status.textContent = "Tool registration failed in this browser. The reader skill is linked above.";
   }
 } else {
-  status.textContent = "This browser has no WebMCP interface. The reader skill is linked above.";
+  status.textContent = "Browser tools are inactive in this tab. The front page and discussion links are available.";
+  document.querySelector("#setup").hidden = false;
 }

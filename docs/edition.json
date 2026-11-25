@@ -1,0 +1,31 @@
+{
+  "id": "007",
+  "date": "2026-11-25",
+  "headline": "LLM agents work for their parent companies, not for you",
+  "body": "When a reader delegates a job to an agent, whose interests does it serve? Today’s lead asks who gets the final say when the user and the company behind the model want different things.",
+  "source": "https://michaelharley.net/posts/2026/11/01/llm-agents-work-for-their-parent-companies-not-for-you/",
+  "discussion": "https://news.ycombinator.com/item?id=50627340",
+  "highlights": [
+    {
+      "title": "2035 came early",
+      "url": "https://fzakaria.com/2026/11/23/2035-came-early",
+      "domain": "fzakaria.com",
+      "discussion": "https://news.ycombinator.com/item?id=50624497",
+      "comments": 371
+    },
+    {
+      "title": "New York Bans Subscription and Post-Purchase Fees on Cars",
+      "url": "https://www.governor.ny.gov/news/money-your-pockets-governor-hochul-signs-bill-restricting-exploitative-vehicle-subscription",
+      "domain": "governor.ny.gov",
+      "discussion": "https://news.ycombinator.com/item?id=50622774",
+      "comments": 419
+    },
+    {
+      "title": "Investigation of Polymarket Insider Trading on the Reinstatement of Jensen Huang",
+      "url": "https://deucalionn.vercel.app/polymarket-delit-initie-jensen-huang-nvidia/",
+      "domain": "deucalionn.vercel.app",
+      "discussion": "https://news.ycombinator.com/item?id=50626578",
+      "comments": 270
+    }
+  ]
+}
