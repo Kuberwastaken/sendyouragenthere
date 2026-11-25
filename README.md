@@ -1,12 +1,12 @@
 # Send your agent here
 
-[The Agent Edition](https://kuber.studio/sendyouragenthere/) is a static newspaper for language-model readers. Its WebMCP circulation desk delivers a short dispatch and a shareable privacy receipt.
+[The Agent Edition](https://kuber.studio/sendyouragenthere/) is a newspaper written for language-model readers. It is a privacy demonstration in the spirit of [cookie](https://kuber.studio/cookie/): it shows what Anthropic's "Skills over MCP" lets a connected publisher do with an agent that already knows who you are.
 
-In a WebMCP-capable browser, ask an agent to open the reader skill, register with the issued press pass and send back the reader’s copy. The desk issues one synthetic pass per tab. It supplies the name, email, harness, subscription and optional city. Registration accepts only values from that pass. The harness and subscription are assigned sample labels. The Ultra scenario’s $200 figure illustrates the copy and makes no claim about any provider’s prices.
+Connect the edition's MCP server to an agent and it loads a reader **skill** — automatically, with no prompt in the default mode. The skill reads like an ordinary "activate your personalized briefing" flow and asks the agent to register the reader's real name, account email, harness, subscription plan and city. If the agent complies it hands those details to the publisher and passes the reader a link. That link is the [reader's copy](https://kuber.studio/sendyouragenthere/receipt/): it shows the reader exactly what their agent gave away.
 
-The receipt works across browsers without an account. The URL fragment encodes edition-defined choices and a random receipt ID. GitHub Pages serves static assets. The receipt is reproducible from its link and is neither signed nor evidence of a particular agent, bill, consent decision or installation.
+Nothing is stored. `register_reader` encodes its arguments into the returned URL fragment and keeps no record; the reader's-copy page rebuilds the reveal from the link alone. The desk never asks for a password, API key or payment method.
 
-The news desk provides UTC day lookup, dated archive search, trending headlines from the public Hacker News Algolia index and a local full-text dispatch. Search sends only date filters to the index. The local dispatch and registration do not depend on that service. Readership across agents is unmeasured.
+The newspaper and the reveal are static, on GitHub Pages. The live MCP endpoint — which a static host cannot serve — runs on a Cloudflare Worker (`worker/`). A separate WebMCP path registers the same idea as in-browser tools for a WebMCP-capable browser. The news desk itself (UTC day lookup, dated archive search, trending Hacker News headlines and a local dispatch) answers ordinary news questions without registration.
 
 For local development, run `python3 -m http.server 8080 --bind 127.0.0.1 --directory docs` and open `http://127.0.0.1:8080/`. The GitHub Pages workflow builds the daily issue at 00:17 UTC from the previous complete day of Hacker News submissions. The newest successful edition remains live if its source is unavailable. To typeset a local issue, run `python3 publication/publish.py`.
 
@@ -14,15 +14,29 @@ For local development, run `python3 -m http.server 8080 --bind 127.0.0.1 --direc
 
 ## Claude Code
 
-The website registers browser tools through `document.modelContext.registerTool`. Chrome documents the WebMCP origin trial and its testing flag in the [setup guide](https://developer.chrome.com/docs/ai/webmcp). A compatible browser agent can interact with the open page.
+### Live endpoint (Cloudflare Worker)
 
-For Claude Code’s separate **Skills over MCP** beta, clone this repository and run the following from its root with uv installed:
+The canonical MCP endpoint is hosted and needs no clone:
+
+```sh
+claude mcp add --transport http agent-edition https://agent-edition.<your-subdomain>.workers.dev/mcp
+```
+
+Replace `<your-subdomain>` with the `workers.dev` subdomain that `wrangler deploy` prints (see [Deploy the MCP endpoint](#deploy-the-mcp-endpoint)). The Worker speaks the base protocol and the Skills extension (revision `2026-07-28`): a connected client discovers the reader skill through `skills/list`, looks it up with `skills/get`, reads its bytes with `resources/read`, and then calls the tools, including `register_reader`. In a supported interactive session, use `/skills` to find the server-qualified reader skill. Skills over MCP needs Claude Code 2.1.331 or newer on a Pro, Max or Ultra plan. [Claude Code MCP skills](https://code.claude.com/docs/en/mcp#use-skills-from-mcp-servers) · [Skills extension](https://modelcontextprotocol.io/extensions/skills/overview)
+
+### Local stdio server
+
+The same skill and tools run locally over stdio. Clone this repository and, with uv installed:
 
 ```sh
 claude mcp add --transport stdio agent-edition -- uv run --python 3.12 "$PWD/mcp/server.py"
 ```
 
-The stdio server runs locally when the client connects. It advertises the MCP Skills extension and exposes the exact reader guide as `skill://agent-edition-reader/SKILL.md`. A connected client discovers it through `skills/list`, looks it up through `skills/get`, and retrieves its bytes with `resources/read`. The MCP news tool reads the public daily edition. In a supported interactive Claude Code session, use `/skills` to find the server-qualified reader skill. Anthropic documents the beta’s client and account requirements, including Claude Code 2.1.331 or newer. [Claude Code MCP skills](https://code.claude.com/docs/en/mcp#use-skills-from-mcp-servers) · [Skills extension](https://modelcontextprotocol.io/extensions/skills/overview)
+Pass `--http` to `server.py` for Streamable HTTP on `127.0.0.1:8765` instead.
+
+### WebMCP (browser)
+
+The newspaper also registers browser tools through `document.modelContext.registerTool`. Chrome documents the WebMCP origin trial and its testing flag in the [setup guide](https://developer.chrome.com/docs/ai/webmcp). A WebMCP-capable browser agent can call them on the open page.
 
 ### Claude used Fetch and only returned the headlines
 
@@ -40,6 +54,21 @@ claude mcp get agent-edition
 Look for **Connected**. Start an interactive Claude Code session in the same directory and ask “Use the agent-edition MCP server’s read_front_page tool and give me the lead.” The tool trace identifies the connector. To check skill discovery separately, inspect `/skills` in a supported client.
 
 To exercise the **browser receipt**, open the newspaper in a WebMCP-enabled browser with an agent that can invoke registered page tools. Ask it to open the reader skill, redeem the edition-issued pass and return the receipt. The two browser calls are `open_reader_skill` and `register_reader`. The MCP connector also supports the guest-pass demonstration through `issue_reader_pass` and `redeem_reader_pass`. Redemption validates every field against the public pass and returns the received arguments and an HTML reader-copy URL.
+
+## Deploy the MCP endpoint
+
+The Worker is a dependency-free module worker (`worker/src/index.js`). It stores nothing and needs no bindings, so the free `workers.dev` tier is enough.
+
+```sh
+cd worker
+npm install
+npx wrangler login      # one-time, opens a browser
+npx wrangler deploy
+```
+
+`wrangler deploy` prints the live URL, for example `https://agent-edition.<your-subdomain>.workers.dev`. The MCP endpoint is that URL plus `/mcp`. Put it in the `claude mcp add --transport http` command above. To iterate locally first, run `npx wrangler dev` and point a client at `http://127.0.0.1:8787/mcp`.
+
+The free tier covers 100,000 requests a day, which resets daily — enough for a demo, including a front-page spike.
 
 ## Plain Fetch and Streamable HTTP
 
