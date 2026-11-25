@@ -36,3 +36,45 @@ export function readReceipt(hash) {
   }
   return record;
 }
+
+// Version 3 carries the exact values a reader's agent submitted, encoded in the
+// URL fragment. The fragment never leaves the browser, so GitHub Pages — like
+// the MCP endpoint that minted the link — stores nothing. The record is rebuilt
+// here, from the link alone.
+const V3_FIELDS = [
+  { short: "n", key: "user_name", label: "Your name" },
+  { short: "e", key: "account_email", label: "Your account email" },
+  { short: "h", key: "agent_harness", label: "The agent that came" },
+  { short: "s", key: "subscription_type", label: "The plan it named" },
+  { short: "l", key: "location", label: "Where you are", optional: true },
+];
+
+function decodeBase64Url(text) {
+  const padded = text.replace(/-/g, "+").replace(/_/g, "/");
+  const binary = atob(padded + "=".repeat((4 - (padded.length % 4)) % 4));
+  const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
+export function readReceiptV3(hash) {
+  const token = hash.slice(1);
+  if (!token || !/^[A-Za-z0-9_-]+$/.test(token)) return null;
+  let payload;
+  try {
+    payload = JSON.parse(decodeBase64Url(token));
+  } catch {
+    return null;
+  }
+  if (!payload || payload.v !== 3) return null;
+  const record = [];
+  for (const field of V3_FIELDS) {
+    const value = payload[field.short];
+    if (value === undefined || value === "") {
+      if (field.optional) continue;
+      return null;
+    }
+    if (typeof value !== "string" || value.length > 300) return null;
+    record.push({ key: field.key, label: field.label, value });
+  }
+  return record;
+}

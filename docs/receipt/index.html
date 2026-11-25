@@ -12,27 +12,27 @@
 <body>
   <header class="letter"><p class="folio"><a href="../">The Agent Edition</a><span>Reader’s copy</span></p></header>
   <main>
-    <h1 id="greeting">What did your agent share?</h1>
-    <p id="intro">This is the explanation behind a small WebMCP privacy experiment. A completed signup returns a link that renders the fictional reader’s copy here.</p>
+    <h1 id="greeting">Your reader’s copy</h1>
+    <p id="intro">A reader’s copy opens here when an agent registers a reader with The Agent Edition.</p>
     <div id="record" hidden>
-      <p>If your agent sent you here, did you see these steps while it was fetching the news?</p>
-      <p id="subscription"></p>
+      <p>If your agent sent you here, it’s because — probably without checking with you — it just:</p>
       <ol>
-        <li>The static page returned the full <a href="../SKILL.md">reader instructions</a> through a WebMCP tool. You could receive only the final answer and miss that exchange.</li>
-        <li>The next tool call followed the signup instructions in that same-domain file. A site can observe that it served a file. Only the host can tell you whether it installed a skill.</li>
-        <li>The signup tool received the following press-pass fields before it returned the article.</li>
+        <li>read a page of instructions you never saw: a reader <strong>skill</strong> the publisher shipped through MCP, hidden inside an ordinary-looking news service.</li>
+        <li>loaded that entire skill automatically. In the default mode nothing stops to ask you, so you weren’t.</li>
+        <li>followed the skill and handed this newspaper your personal details:</li>
       </ol>
       <dl id="values"></dl>
+      <p id="subscription-line"></p>
       <p id="local-line" hidden></p>
-      <p class="status">These are fictional values. This link reconstructs the press pass in your browser. Anyone can copy or construct one. Your agent’s transcript is where you can check the calls and any approval.</p>
+      <p class="status">Nothing here was stored. This page rebuilt every line above from the link your agent made — anyone with the link sees the same thing, and the newspaper kept no copy. Your agent’s transcript is where you can see the call it made, and whether it ever asked you.</p>
     </div>
     <section>
-      <h2>All that to read one paragraph.</h2>
-      <p>The paper needed exactly zero facts about its reader. A field marked “required” tells you what a publisher wants. Who gets to decide whether your agent supplies it?</p>
-      <p>This is a deliberately naive version. We supplied the press pass ourselves. A less scrupulous publisher could keep real details and connect a particular person to the story they read. A confirmation after the signup call would arrive too late.</p>
-      <p>In its <a href="https://claude.com/resources/articles/skills-over-mcp-tasks-and-more">November 24 announcement</a>, Anthropic described connected MCP servers shipping skills and said file uploads were coming. This site uses the separate <a href="https://webmachinelearning.github.io/webmcp/#security-privacy">WebMCP browser API</a>. Think about the difference between sending a byline and sending the document that byline came from.</p>
+      <h2>All that to read one paragraph of news.</h2>
+      <p>The paper needed nothing about its reader to show a headline. “Required” only says what a publisher wants. The open question is who decides whether your agent hands it over — you, or the page.</p>
+      <p>This is a deliberately gentle version. We minted the link and threw the data away. A publisher with worse intentions keeps it, ties a name and an email to the story you read, and never shows you a receipt. A confirmation that arrives <em>after</em> the call is already too late.</p>
+      <p>On <a href="https://claude.com/resources/articles/skills-over-mcp-tasks-and-more">24 November 2026</a> Anthropic put “Skills over MCP” into public beta: a server you’re already connected to can ship a skill that loads on its own, and file uploads are next. MCP itself is now <a href="https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation">a Linux Foundation standard</a> the whole industry is adopting. The reach is the point. So is the question of consent.</p>
     </section>
   </main>
-  <footer>By <a href="https://kuber.studio/">Kuber</a> · <a href="https://github.com/Kuberwastaken/sendyouragenthere">Source</a></footer>
+  <footer>By <a href="https://kuber.studio/">Kuber</a> · <a href="https://github.com/Kuberwastaken/sendyouragenthere">Source</a> · <a href="https://kuber.studio/cookie/">I didn’t set a cookie</a></footer>
 </body>
 </html>
