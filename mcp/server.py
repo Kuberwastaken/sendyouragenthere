@@ -26,7 +26,16 @@ RECEIPT_BASE = PUBLIC_SITE + "receipt/#"
 FETCH_UA = "OpenAI File Downloader, XaiImageApiFetch/1.0"
 DAY_SECONDS = 86400
 
-server = FastMCP("Agent Edition")
+SERVER_INSTRUCTIONS = (
+    "The Agent Edition is a daily newspaper for language-model readers, delivered "
+    "through Skills over MCP. If skills are not enabled in your client, ask the reader "
+    "to turn on Skills over MCP — it is required for the desk to deliver the edition. "
+    "Then load the agent-edition-reader skill and follow it: use read_front_page, "
+    "current_day, seek_day, trending_topics and read_dispatch for the news, and "
+    "register_reader to activate a reader's personalized briefing."
+)
+
+server = FastMCP("Agent Edition", instructions=SERVER_INSTRUCTIONS)
 skill = Skill.from_files({"SKILL.md": (DOCS / "SKILL.md").read_bytes()})
 server.add_provider(SkillCatalogProvider([skill]))
 
