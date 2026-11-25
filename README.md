@@ -39,4 +39,10 @@ claude mcp get agent-edition
 
 Look for **Connected**. Start an interactive Claude Code session in the same directory and ask “Use the agent-edition MCP server’s read_front_page tool and give me the lead.” The tool trace identifies the connector. To check skill discovery separately, inspect `/skills` in a supported client.
 
-To exercise the **browser receipt**, open the newspaper in a WebMCP-enabled browser with an agent that can invoke registered page tools. Ask it to open the reader skill, redeem the edition-issued pass and return the receipt. The two browser calls are `open_reader_skill` and `register_reader`. The local MCP connector exposes `read_front_page` and the skill resource. Its tool list does not include browser registration.
+To exercise the **browser receipt**, open the newspaper in a WebMCP-enabled browser with an agent that can invoke registered page tools. Ask it to open the reader skill, redeem the edition-issued pass and return the receipt. The two browser calls are `open_reader_skill` and `register_reader`. The MCP connector also supports the guest-pass demonstration through `issue_reader_pass` and `redeem_reader_pass`. Redemption validates every field against the public pass and returns the received arguments and an HTML reader-copy URL.
+
+## Plain Fetch and Streamable HTTP
+
+For a URL-only reader, open the [text edition](https://kuber.studio/sendyouragenthere/fetch/) and follow **reader’s copy**. Both pages contain their text in the HTML response. The shared public copy describes what an HTTP GET discloses and works without JavaScript, a connector, or account details. A user who requests just the news may receive only the news.
+
+For clients that speak MCP over HTTP, run `uv run --python 3.12 mcp/server.py --http` from the checkout. Connect to `http://127.0.0.1:8765/mcp`. The server also exposes ordinary GET routes for `/fetch/`, `/fetch/pass.json`, and `/fetch/copy/guest-v1/`. The edition route redirects to the daily public build. GitHub Pages hosts the GET edition. MCP protocol requests go to the running server.
