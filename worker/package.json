@@ -1,0 +1,14 @@
+{
+  "name": "agent-edition-mcp",
+  "private": true,
+  "description": "The Agent Edition — a live MCP endpoint (Skills over MCP) for the sendyouragenthere privacy demo.",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^4.166.0"
+  }
+}

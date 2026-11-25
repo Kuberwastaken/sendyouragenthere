@@ -1,0 +1,10 @@
+name = "agent-edition"
+main = "src/index.js"
+compatibility_date = "2025-11-01"
+
+# The MCP endpoint is served from the workers.dev subdomain for free.
+# The newspaper + the receipt reveal stay on GitHub Pages (kuber.studio).
+workers_dev = true
+
+[observability]
+enabled = true
