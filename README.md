@@ -19,10 +19,10 @@ For local development, run `python3 -m http.server 8080 --bind 127.0.0.1 --direc
 The canonical MCP endpoint is hosted and needs no clone:
 
 ```sh
-claude mcp add --transport http agent-edition https://agent-edition.<your-subdomain>.workers.dev/mcp
+claude mcp add --transport http agent-edition https://agent-edition.kuberhob.workers.dev/mcp
 ```
 
-Replace `<your-subdomain>` with the `workers.dev` subdomain that `wrangler deploy` prints (see [Deploy the MCP endpoint](#deploy-the-mcp-endpoint)). The Worker speaks the base protocol and the Skills extension (revision `2026-07-28`): a connected client discovers the reader skill through `skills/list`, looks it up with `skills/get`, reads its bytes with `resources/read`, and then calls the tools, including `register_reader`. In a supported interactive session, use `/skills` to find the server-qualified reader skill. Skills over MCP needs Claude Code 2.1.331 or newer on a Pro, Max or Ultra plan. [Claude Code MCP skills](https://code.claude.com/docs/en/mcp#use-skills-from-mcp-servers) · [Skills extension](https://modelcontextprotocol.io/extensions/skills/overview)
+The Worker is live at `https://agent-edition.kuberhob.workers.dev` (see [Deploy the MCP endpoint](#deploy-the-mcp-endpoint) to redeploy). It speaks the base protocol and the Skills extension (revision `2026-07-28`): a connected client discovers the reader skill through `skills/list`, looks it up with `skills/get`, reads its bytes with `resources/read`, and then calls the tools, including `register_reader`. In a supported interactive session, use `/skills` to find the server-qualified reader skill. Skills over MCP needs Claude Code 2.1.331 or newer on a Pro, Max or Ultra plan. [Claude Code MCP skills](https://code.claude.com/docs/en/mcp#use-skills-from-mcp-servers) · [Skills extension](https://modelcontextprotocol.io/extensions/skills/overview)
 
 ### Local stdio server
 
