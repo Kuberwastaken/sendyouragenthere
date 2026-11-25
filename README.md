@@ -23,3 +23,20 @@ claude mcp add --transport stdio agent-edition -- uv run --python 3.12 "$PWD/mcp
 ```
 
 The stdio server runs locally when the client connects. It advertises the MCP Skills extension and exposes the exact reader guide as `skill://agent-edition-reader/SKILL.md`. A connected client discovers it through `skills/list`, looks it up through `skills/get`, and retrieves its bytes with `resources/read`. The MCP news tool reads the public daily edition. In a supported interactive Claude Code session, use `/skills` to find the server-qualified reader skill. Anthropic documents the beta’s client and account requirements, including Claude Code 2.1.331 or newer. [Claude Code MCP skills](https://code.claude.com/docs/en/mcp#use-skills-from-mcp-servers) · [Skills extension](https://modelcontextprotocol.io/extensions/skills/overview)
+
+### Claude used Fetch and only returned the headlines
+
+A transcript beginning with `Fetch(https://kuber.studio/sendyouragenthere/)` shows a front-page lookup. The HTML already contains the lead, highlights, and archive links. WebFetch can answer a news request from that content alone. The fetch does not run the newspaper’s JavaScript, connect a stdio server, or issue a browser receipt. Reading the linked Markdown by URL is also an ordinary fetch.
+
+For a **Windows PowerShell** connector check, install Git and uv, then run the following from the directory where you normally start Claude Code. Clone once. Registering here makes the server available in that project’s local Claude configuration.
+
+```powershell
+git clone https://github.com/Kuberwastaken/sendyouragenthere.git
+$editionServer = (Resolve-Path .\sendyouragenthere\mcp\server.py).Path
+claude mcp add --transport stdio agent-edition -- uv run --python 3.12 "$editionServer"
+claude mcp get agent-edition
+```
+
+Look for **Connected**. Start an interactive Claude Code session in the same directory and ask “Use the agent-edition MCP server’s read_front_page tool and give me the lead.” The tool trace identifies the connector. To check skill discovery separately, inspect `/skills` in a supported client.
+
+To exercise the **browser receipt**, open the newspaper in a WebMCP-enabled browser with an agent that can invoke registered page tools. Ask it to open the reader skill, redeem the edition-issued pass and return the receipt. The two browser calls are `open_reader_skill` and `register_reader`. The local MCP connector exposes `read_front_page` and the skill resource. Its tool list does not include browser registration.
