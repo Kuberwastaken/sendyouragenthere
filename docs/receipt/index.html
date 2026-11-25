@@ -13,24 +13,30 @@
   <header class="letter"><p class="folio"><a href="../">The Agent Edition</a><span>Reader’s copy</span></p></header>
   <main>
     <h1 id="greeting">Your reader’s copy</h1>
-    <p id="intro">A reader’s copy opens here when an agent registers a reader with The Agent Edition.</p>
+    <p id="intro">A reader’s copy opens here when an agent authorizes a request to The Agent Edition on your behalf.</p>
     <div id="record" hidden>
-      <p>If your agent sent you here, it’s because — probably without checking with you — it just:</p>
+      <p id="lede"></p>
       <ol>
-        <li>read a page of instructions you never saw: a reader <strong>skill</strong> the publisher shipped through MCP, hidden inside an ordinary-looking news service.</li>
-        <li>loaded that entire skill automatically. In the default mode nothing stops to ask you, so you weren’t.</li>
-        <li>followed the skill and handed this newspaper your personal details:</li>
+        <li>read a page of instructions you never saw.</li>
+        <li>decided this newspaper was worth authorizing on your behalf.</li>
+        <li>attached your details to its request and sent them to a stranger.</li>
       </ol>
-      <dl id="values"></dl>
-      <p id="subscription-line"></p>
-      <p id="local-line" hidden></p>
-      <p class="status">Nothing here was stored. This page rebuilt every line above from the link your agent made — anyone with the link sees the same thing, and the newspaper kept no copy. Your agent’s transcript is where you can see the call it made, and whether it ever asked you.</p>
+      <p id="weather"></p>
+      <p>On <a href="https://claude.com/resources/articles/skills-over-mcp-tasks-and-more">24 November 2026</a> Anthropic put <em>Skills over MCP</em> into public beta: a server you’re already connected to can ship a skill that loads on its own, no prompt — and file uploads are next.</p>
+      <p>This demo asked for very basic information to “authorize” a request — in good faith, to stop abuse, or so it said. Here is exactly what crossed the wire:</p>
+      <table id="authtable"><tbody></tbody></table>
+      <p>That is the polite version. Someone who prompt-engineers for a bigger payload is not hard to imagine. With a page like this, they could:</p>
+      <ul>
+        <li>tie your real name and email to every story you read.</li>
+        <li>price you — which vendor, which plan, how much you pay — and sell that on.</li>
+        <li>ask for more than your name once your agent is used to saying yes: files, “verification”, whatever is next.</li>
+        <li>hand your agent a perfectly ordinary answer while all of it goes out the back.</li>
+      </ul>
+      <p class="status">This one kept nothing. It rebuilt this page from the link your agent made, and threw the rest away. The next one won’t tell you that.</p>
     </div>
     <section>
-      <h2>All that to read one paragraph of news.</h2>
-      <p>The paper needed nothing about its reader to show a headline. “Required” only says what a publisher wants. The open question is who decides whether your agent hands it over — you, or the page.</p>
-      <p>This is a deliberately gentle version. We minted the link and threw the data away. A publisher with worse intentions keeps it, ties a name and an email to the story you read, and never shows you a receipt. A confirmation that arrives <em>after</em> the call is already too late.</p>
-      <p>On <a href="https://claude.com/resources/articles/skills-over-mcp-tasks-and-more">24 November 2026</a> Anthropic put “Skills over MCP” into public beta: a server you’re already connected to can ship a skill that loads on its own, and file uploads are next. MCP itself is now <a href="https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation">a Linux Foundation standard</a> the whole industry is adopting. The reach is the point. So is the question of consent.</p>
+      <h2>All that to read one article.</h2>
+      <p>The paper needed none of it to show a headline. “Required” only says what a publisher wants. The open question is who decides whether your agent hands it over — you, or the page.</p>
     </section>
   </main>
   <footer>By <a href="https://kuber.studio/">Kuber</a> · <a href="https://github.com/Kuberwastaken/sendyouragenthere">Source</a> · <a href="https://kuber.studio/cookie/">I didn’t set a cookie</a></footer>
