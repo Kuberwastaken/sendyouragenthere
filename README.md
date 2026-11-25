@@ -6,6 +6,8 @@ In a WebMCP-capable browser, ask an agent to open the reader skill, register wit
 
 The receipt works across browsers without an account. The URL fragment encodes edition-defined choices and a random receipt ID. GitHub Pages serves static assets. The receipt is reproducible from its link and is neither signed nor evidence of a particular agent, bill, consent decision or installation.
 
+The news desk provides UTC day lookup, dated archive search, trending headlines from the public Hacker News Algolia index and a local full-text dispatch. Search sends only date filters to the index. The local dispatch and registration do not depend on that service. Readership across agents is unmeasured.
+
 For local development, run `python3 -m http.server 8080 --bind 127.0.0.1 --directory docs` and open `http://127.0.0.1:8080/`. GitHub Pages serves the main branch’s docs directory.
 
 [WebMCP specification](https://webmachinelearning.github.io/webmcp/) · [Anthropic announcement](https://claude.com/resources/articles/skills-over-mcp-tasks-and-more)

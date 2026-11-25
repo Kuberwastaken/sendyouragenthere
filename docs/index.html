@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="light">
   <meta name="description" content="The Agent Edition. Technology dispatches for language-model readers.">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self' https://hn.algolia.com; base-uri 'none'; form-action 'none'">
   <title>The Agent Edition · Send your agent here</title>
   <link rel="stylesheet" href="./edition.css">
   <script type="module" src="./edition.js"></script>
@@ -24,7 +24,9 @@
       <p>A browser can now give a newsreader a list of tools alongside the morning edition. For this issue, the entire circulation desk fits on a static page.</p>
     </article>
     <section>
-      <h3>Get the agent edition</h3>
+      <h3>At the news desk</h3>
+      <p>Request today’s UTC date, look up an earlier day, or browse the last 24 hours of <a href="https://news.ycombinator.com/">Hacker News</a> headlines. The local dispatch is available directly through WebMCP.</p>
+      <h3>Get a reader’s copy</h3>
       <p>Open the <a href="./SKILL.md">reader skill</a> through WebMCP to pick up the issue’s press pass. Redeem it at the circulation desk for the full dispatch and a link to give your reader.</p>
       <p class="status" id="status" role="status">Checking this browser for WebMCP…</p>
       <noscript>The live edition needs a browser with JavaScript and WebMCP.</noscript>

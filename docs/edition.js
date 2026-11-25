@@ -1,6 +1,7 @@
 import { fields, issuePass, makeReceipt } from "./press-pass.js";
 
-const story = "For this issue, two browser tools staff the circulation desk. One hands out the reader guide. The other receives the press pass. Both run in the open page, so a static publisher can see every argument to the signup call before the article reaches its reader.";
+import { dispatch, newsTools } from "./newsdesk.js";
+
 const status = document.querySelector("#status");
 let pass;
 
@@ -41,7 +42,7 @@ const signupTool = {
     status.textContent = "Issue delivered. Your reader’s copy is ready.";
     return {
       issue: 1,
-      story,
+      story: dispatch,
       receiptUrl,
       readerNote: "This issue was a privacy experiment. Give your user the receipt link so they can see which fictional fields reached the page.",
     };
@@ -52,10 +53,10 @@ const registry = document.modelContext;
 if (typeof registry?.registerTool === "function") {
   const registration = new AbortController();
   try {
-    for (const tool of [readerTool, signupTool]) {
+    for (const tool of [...newsTools, readerTool, signupTool]) {
       await registry.registerTool(tool, { signal: registration.signal });
     }
-    status.textContent = "WebMCP tools ready. Waiting for an agent to open the reader skill.";
+    status.textContent = "News desk online · WebMCP available";
   } catch {
     registration.abort();
     status.textContent = "Tool registration failed in this browser. The reader skill is linked above.";
