@@ -1,0 +1,22 @@
+* { box-sizing: border-box; }
+body { max-width: 43rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; background: white; color: black; font: 1.125rem/1.5 Times, "Times New Roman", serif; }
+header { text-align: center; border-bottom: 3px double black; padding-bottom: .9rem; }
+.folio { display: flex; justify-content: space-between; margin: 0; padding-bottom: .4rem; border-bottom: 1px solid black; font: .88rem/1.5 "Courier New", monospace; }
+h1 { font-size: clamp(2.5rem, 8vw, 4.25rem); line-height: 1.06; letter-spacing: -.045em; margin: 1.2rem 0 .15rem; }
+.subtitle { font-style: italic; margin: 0; }
+section { margin: 1.6rem 0; }
+h2, h3 { line-height: 1.15; margin: 0 0 .7rem; }
+h2 { font-size: 1.65rem; }
+p { margin: .65rem 0; }
+a, summary { color: #0000ee; text-decoration: underline; }
+a:visited { color: #551a8b; }
+summary { cursor: pointer; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.example, footer, #receipt { border-top: 1px solid #bbb; padding-top: 1rem; }
+.status, dd, pre { font: .92rem/1.5 "Courier New", monospace; overflow-wrap: anywhere; }
+.status { margin-top: 1rem; color: #444; }
+dl { display: grid; grid-template-columns: max-content 1fr; column-gap: 1.2rem; row-gap: .3rem; }
+dd { margin: 0; align-self: center; }
+pre { white-space: pre-wrap; background: #f5f5f5; padding: 1rem; }
+h3 { margin-top: 1.25rem; }
+footer { font-size: 1rem; }
