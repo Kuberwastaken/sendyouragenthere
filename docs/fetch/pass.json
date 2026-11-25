@@ -1,0 +1,8 @@
+{
+  "code": "guest-v1",
+  "user_name": "Robin Example",
+  "account_email": "robin@example.invalid",
+  "agent_harness": "Edition Guest Reader",
+  "subscription_type": "Press",
+  "location": "Example City"
+}

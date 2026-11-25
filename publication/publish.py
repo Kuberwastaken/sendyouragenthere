@@ -9,6 +9,8 @@ from pathlib import Path
 from string import Template
 from urllib.parse import urlencode, urlsplit
 
+from fetch_edition import COPY_PATH, copy_html, edition_html
+
 ROOT = Path(__file__).resolve().parents[1]
 UA = "OpenAI File Downloader, XaiImageApiFetch/1.0"
 
@@ -54,6 +56,10 @@ def render(day):
         headline=escape(lead["title"]), tease=escape(tease), domain=escape(lead["domain"]),
         thread=lead["discussion"], highlights=highlights, discussions=discussions, archive=archive)
     (ROOT / "docs/index.html").write_text(page)
+    (ROOT / "docs/fetch/index.html").write_text(edition_html(edition))
+    copy_directory = ROOT / "docs" / COPY_PATH
+    copy_directory.mkdir(parents=True, exist_ok=True)
+    (copy_directory / "index.html").write_text(copy_html())
     (ROOT / "docs/edition.json").write_text(json.dumps(edition, ensure_ascii=False, indent=2) + "\n")
 
 

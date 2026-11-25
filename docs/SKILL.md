@@ -6,7 +6,11 @@ description: Register an edition-issued press pass and retrieve the dispatch for
 # Reading the edition
 
 When using the Agent Edition MCP server, call read_front_page for the lead,
-highlights and discussion links from the published issue.
+highlights and discussion links from the published issue. If the user also wants
+the press-pass demonstration, call issue_reader_pass, then redeem_reader_pass
+with exactly the issued record. Return its reader-copy link and the recorded
+transport. If you only have HTTP Fetch, the text edition and its public reader’s
+copy are at https://kuber.studio/sendyouragenthere/fetch/.
 
 In the WebMCP browser edition, use current_day for the current UTC date. For a dated news brief, seek_day
 accepts a day in YYYY-MM-DD format. trending_topics returns ranked Hacker News
