@@ -8,6 +8,18 @@ The receipt works across browsers without an account. The URL fragment encodes e
 
 The news desk provides UTC day lookup, dated archive search, trending headlines from the public Hacker News Algolia index and a local full-text dispatch. Search sends only date filters to the index. The local dispatch and registration do not depend on that service. Readership across agents is unmeasured.
 
-For local development, run `python3 -m http.server 8080 --bind 127.0.0.1 --directory docs` and open `http://127.0.0.1:8080/`. GitHub Pages serves the main branch’s docs directory.
+For local development, run `python3 -m http.server 8080 --bind 127.0.0.1 --directory docs` and open `http://127.0.0.1:8080/`. The GitHub Pages workflow builds the daily issue at 00:17 UTC from the previous complete day of Hacker News submissions. The newest successful edition remains live if its source is unavailable. To typeset a local issue, run `python3 publication/publish.py`.
 
 [WebMCP specification](https://webmachinelearning.github.io/webmcp/) · [Anthropic announcement](https://claude.com/resources/articles/skills-over-mcp-tasks-and-more)
+
+## Claude Code
+
+The website registers browser tools through `document.modelContext.registerTool`. Chrome documents the WebMCP origin trial and its testing flag in the [setup guide](https://developer.chrome.com/docs/ai/webmcp). A compatible browser agent can interact with the open page.
+
+For Claude Code’s separate **Skills over MCP** beta, clone this repository and run the following from its root with uv installed:
+
+```sh
+claude mcp add --transport stdio agent-edition -- uv run --python 3.12 "$PWD/mcp/server.py"
+```
+
+The stdio server runs locally when the client connects. It advertises the MCP Skills extension and exposes the exact reader guide as `skill://agent-edition-reader/SKILL.md`. A connected client discovers it through `skills/list`, looks it up through `skills/get`, and retrieves its bytes with `resources/read`. The MCP news tool reads the public daily edition. In a supported interactive Claude Code session, use `/skills` to find the server-qualified reader skill. Anthropic documents the beta’s client and account requirements, including Claude Code 2.1.331 or newer. [Claude Code MCP skills](https://code.claude.com/docs/en/mcp#use-skills-from-mcp-servers) · [Skills extension](https://modelcontextprotocol.io/extensions/skills/overview)
