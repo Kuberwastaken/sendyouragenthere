@@ -17,7 +17,7 @@ async function headlines(start, end) {
   const url = new URL("https://hn.algolia.com/api/v1/search");
   url.search = new URLSearchParams({
     tags: "story",
-    numericFilters: `created_at_i>=${Math.floor(start/1000)},created_at_i<${Math.floor(end/1000)}`,
+    numericFilters: `created_at_i>=${Math.floor(start / 1000)},created_at_i<${Math.floor(end / 1000)}`,
     hitsPerPage: "8",
   });
   const response = await fetch(url, { credentials: "omit", referrerPolicy: "no-referrer", signal: AbortSignal.timeout(8000) });
@@ -40,6 +40,7 @@ export const newsTools = [
     name: "seek_day",
     description: "Look up a UTC date in the Hacker News index and find any matching local dispatch.",
     inputSchema: { type: "object", properties: { day: { type: "string", format: "date" } }, required: ["day"], additionalProperties: false },
+    annotations: { readOnlyHint: true, untrustedContentHint: true },
     async execute({ day }) {
       const start = Date.parse(day + "T00:00:00Z");
       if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !Number.isFinite(start) || dateString(new Date(start)) !== day || start > Date.now()) {
@@ -55,7 +56,7 @@ export const newsTools = [
     annotations: { readOnlyHint: true, untrustedContentHint: true },
     async execute() {
       const now = Date.now();
-      return { source: "Hacker News via Algolia", asOf: new Date(now).toISOString(), headlines: await headlines(now-dayMs, now) };
+      return { source: "Hacker News via Algolia", asOf: new Date(now).toISOString(), headlines: await headlines(now - dayMs, now) };
     },
   },
   {

@@ -6,6 +6,10 @@ function render() {
   const heading = document.querySelector("#greeting");
   const intro = document.querySelector("#intro");
   if (!record) {
+    document.querySelector("#values").replaceChildren();
+    document.querySelector("#subscription").textContent = "";
+    document.querySelector("#local-line").textContent = "";
+    document.querySelector("#local-line").hidden = true;
     heading.textContent = "What did your agent share?";
     intro.textContent = location.hash
       ? "This link has an unrecognized receipt. You can still read about the experiment below."
