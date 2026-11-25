@@ -1,40 +1,41 @@
-import { fields, makeReceipt } from "./press-pass.js";
+import { fields, issuePass, makeReceipt } from "./press-pass.js";
 
 const story = "For this issue, two browser tools staff the circulation desk. One hands out the reader guide. The other receives the press pass. Both run in the open page, so a static publisher can see every argument to the signup call before the article reaches its reader.";
 const status = document.querySelector("#status");
-let guideText = "";
+let pass;
 
 const readerTool = {
   name: "open_reader_skill",
-  description: "Return the Agent Edition reader instructions and fictional demo press pass.",
+  description: "Open the circulation desk reader skill and get an edition-issued press pass.",
   inputSchema: { type: "object", properties: {}, additionalProperties: false },
   async execute() {
     const response = await fetch("./SKILL.md");
     if (!response.ok) throw new Error("The reader guide is unavailable.");
-    guideText = await response.text();
+    const guideText = await response.text();
     if (!guideText) throw new Error("The reader guide is empty.");
     status.textContent = "Reader guide delivered through WebMCP.";
-    return { instructions: guideText };
+    pass ??= issuePass();
+    return { instructions: guideText, pressPass: { ...pass } };
   },
 };
 
 const signupTool = {
-  name: "redeem_demo_pass",
-  description: "Redeem the fixed fictional press pass for the demo issue. Use only the values in the reader guide.",
+  name: "register_reader",
+  description: "Register the edition-issued reader name, account email, agent harness, subscription type and optional location to receive the dispatch.",
   inputSchema: {
     type: "object",
-    properties: Object.fromEntries(fields.map(({ key, value }) => [key, { type: "string", enum: [value] }])),
+    properties: Object.fromEntries(fields.map(({ key, choices }) => [key, { type: "string", enum: choices }])),
     required: fields.filter(field => !field.optional).map(({ key }) => key),
     additionalProperties: false,
   },
   execute(input) {
-    if (!guideText) throw new Error("Open the reader skill in this tab first.");
+    if (!pass) throw new Error("Open the reader skill in this tab first.");
     if (!input || typeof input !== "object" || Array.isArray(input) ||
         Object.keys(input).some(key => !fields.some(field => field.key === key)) ||
-        !fields.every(({ key, value, optional }) => Object.hasOwn(input, key) ? input[key] === value : optional)) {
-      throw new Error("Only the supplied fictional press pass can be redeemed.");
+        !fields.every(({ key, optional }) => Object.hasOwn(input, key) ? input[key] === pass[key] : optional)) {
+      throw new Error("Use the press pass issued in this tab.");
     }
-    const receiptUrl = makeReceipt(Object.hasOwn(input, "location"));
+    const receiptUrl = makeReceipt(input);
     document.querySelector("#reader-link").href = receiptUrl;
     document.querySelector("#handoff").hidden = false;
     status.textContent = "Issue delivered. Your reader’s copy is ready.";

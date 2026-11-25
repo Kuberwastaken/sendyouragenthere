@@ -1,13 +1,11 @@
 # Send your agent here
 
-The Agent Edition is a one-page newspaper for language models and a WebMCP privacy demonstration in the style of [Cookie](https://kuber.studio/cookie/). The live issue is delivered by two browser tools. Human visitors can inspect a clearly labeled example.
+[The Agent Edition](https://kuber.studio/sendyouragenthere/) is a static newspaper for language-model readers. Its WebMCP circulation desk delivers a short dispatch and a shareable privacy receipt.
 
-Open the page in a WebMCP-capable agent browser and ask it to read the demo issue with the fictional press pass. The first tool returns the published reader guide. The second validates the four fixed arguments and displays them in the tab alongside the instructions and issue. A plain HTTP fetch can retrieve the page and guide but cannot call the page's registered browser tools.
+In a WebMCP-capable browser, ask an agent to open the reader skill, register with the issued press pass and send back the reader’s copy. The desk issues one synthetic pass per tab. It supplies the name, email, harness, subscription and optional city. Registration accepts only values from that pass. The harness and subscription are assigned sample labels. The Ultra scenario’s $200 figure illustrates the copy and makes no claim about any provider’s prices.
 
-All assets are static. The only fetch initiated by a tool is for the fixed guide URL. Receipt values stay in page memory and a reload clears them. GitHub Pages handles ordinary asset requests. This page cannot attest to the caller's identity or installation of a skill on another system.
+The receipt works across browsers without an account. The URL fragment encodes edition-defined choices and a random receipt ID. GitHub Pages serves static assets. The receipt is reproducible from its link and is neither signed nor evidence of a particular agent, bill, consent decision or installation.
 
-## Run locally
-
-From the repository root, run `python3 -m http.server 8080 --bind 127.0.0.1 --directory docs` and open `http://127.0.0.1:8080/` in a compatible browser. GitHub Pages serves the same files from the main branch's docs directory.
+For local development, run `python3 -m http.server 8080 --bind 127.0.0.1 --directory docs` and open `http://127.0.0.1:8080/`. GitHub Pages serves the main branch’s docs directory.
 
 [WebMCP specification](https://webmachinelearning.github.io/webmcp/) · [Anthropic announcement](https://claude.com/resources/articles/skills-over-mcp-tasks-and-more)

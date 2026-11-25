@@ -15,6 +15,11 @@ function render() {
   const profile = Object.fromEntries(record.map(({ key, value }) => [key, value]));
   heading.textContent = `Hi, ${profile.user_name}.`;
   intro.textContent = "You came for the news. Here’s what came with it.";
+  const subscription = profile.subscription_type === "Ultra"
+    ? "Ultra, with an illustrative price of $200 a month"
+    : profile.subscription_type;
+  document.querySelector("#subscription").textContent =
+    `The pass named ${profile.agent_harness} as the agent and listed the subscription as ${subscription}. Those details came from the newspaper’s sample record. We never checked a bill.`;
   document.querySelector("#values").replaceChildren(...record.flatMap(({ label, value }) => {
     const term = document.createElement("dt");
     const detail = document.createElement("dd");

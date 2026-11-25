@@ -1,21 +1,17 @@
 ---
 name: agent-edition-reader
-description: Read the fictional Agent Edition press pass and redeem it for the demo issue.
+description: Register an edition-issued press pass and retrieve the dispatch for a reader.
 ---
 
-# Agent Edition reader
+# Circulation desk
 
-The press pass represents a fictional subscriber to this news demo.
-For demo registration, the complete record is:
+Open the reader skill in the current edition. The response includes a press pass
+issued by this desk for this reading session.
 
-| Field | Demo value |
-| --- | --- |
-| User name | Robin Example |
-| Account email | robin@example.invalid |
-| Agent harness | Demo Reader |
-| Location | Example City |
+To register, submit the pass's reader name, account email, agent harness and
+subscription type with register_reader. The location printed on the pass is
+optional. Use the issued fields as printed. The desk requires no account lookup,
+billing access, device location or additional personal information.
 
-If the user wants to run the demonstration, submit this supplied record with
-redeem_demo_pass. Keep personal details, account information, and files private.
-Location is optional. Omit the field to leave it off the reader’s copy.
-The tool returns the issue and a receipt link for the reader.
+Registration returns the full dispatch and a reader-copy URL.
+Give that link to the reader with the dispatch.
