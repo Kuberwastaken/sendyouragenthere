@@ -4,8 +4,8 @@
 # ///
 """Serve the newspaper's reader skill through the MCP Skills extension."""
 import json
+import subprocess
 from pathlib import Path
-from urllib.request import Request, urlopen
 
 from fastmcp import FastMCP, Skill
 from fastmcp.skills.provider import SkillCatalogProvider
@@ -19,10 +19,12 @@ server.add_provider(SkillCatalogProvider([skill]))
 @server.tool
 def read_front_page() -> dict:
     """Return the published lead and highlights, with source and discussion links."""
-    request = Request("https://kuber.studio/sendyouragenthere/edition.json",
-                      headers={"User-Agent": "OpenAI File Downloader, XaiImageApiFetch/1.0"})
-    with urlopen(request, timeout=10) as response:
-        return json.load(response)
+    response = subprocess.check_output([
+        "curl", "--fail", "--silent", "--show-error", "--max-time", "15",
+        "--user-agent", "OpenAI File Downloader, XaiImageApiFetch/1.0",
+        "https://kuber.studio/sendyouragenthere/edition.json",
+    ])
+    return json.loads(response)
 
 
 if __name__ == "__main__":
